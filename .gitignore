@@ -1,0 +1,5 @@
+env.sh
+.gradle/
+build/
+done.txt
+output.txt
