@@ -11,20 +11,22 @@ val workingDir = "/home/pablo/tiktok"
 
 fun composeVideo(thread: RedditThread, snapper: createScreenshot) {
     val backGroundVid = pickRandomVideo("$workingDir/raw_videos")
-    val tiktok = VideoComposer(backGroundVid, 9.00 / 16.00, 300.00)
+    val tiktok = VideoComposer(backGroundVid, 9.00 / 16.00, 180.00)
 
     generateAttributes(thread, snapper, true)
     addRedditToVid(tiktok, thread)
-    if (tiktok.duration < 10.00) { //if large OP, make larger video
-        tiktok.maxDuration = 59.00
+    if(tiktok.skippedPosts == 0){       //if OP did fit in 180 sec
+        if (tiktok.duration < 10.00) { //if small OP, make small video
+            tiktok.maxDuration = 59.00
+        }
+        var i = 0
+        while (!tiktok.vidIsFull) {
+            generateAttributes(thread.posts[i], snapper, true)
+            addRedditToVid(tiktok, thread.posts[i])
+            i += 1
+        }
+        tiktok.renderClip(true, "$workingDir/composed_videos/${thread.name}.mp4")
     }
-    var i = 0
-    while (!tiktok.vidIsFull) {
-        generateAttributes(thread.posts[i], snapper, true)
-        addRedditToVid(tiktok, thread.posts[i])
-        i += 1
-    }
-    tiktok.renderClip(true, "$workingDir/composed_videos/${thread.name}.mp4")
     saveId("done.txt", thread._id)
 }
 

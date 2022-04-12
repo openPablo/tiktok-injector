@@ -2,12 +2,15 @@ package openpablo.tiktokinjector
 
 import org.openqa.selenium.*
 import org.openqa.selenium.firefox.FirefoxDriver
-import org.openqa.selenium.support.ui.WebDriverWait
-import java.time.Duration
+import org.openqa.selenium.firefox.FirefoxDriverLogLevel
+import org.openqa.selenium.firefox.FirefoxOptions
+import org.openqa.selenium.firefox.FirefoxProfile
+import org.openqa.selenium.remote.DesiredCapabilities
+import java.io.File
 
 
-class TikTokUploader(baseUrl: String, geckoDriverPath1: String) :
-    BrowseTo(baseUrl = baseUrl, geckoDriverPath1 = geckoDriverPath1) {
+class TikTokUploader(baseUrl: String, geckoDriverPath1: String, firefoxProfile: String) :
+    BrowseTo(baseUrl = baseUrl, geckoDriverPath1 = geckoDriverPath1, firefoxProfile = firefoxProfile) {
     fun login(username: String,password: String) {
         Thread.sleep(1000)
         clickText("Use phone / email / username")
@@ -24,32 +27,43 @@ class TikTokUploader(baseUrl: String, geckoDriverPath1: String) :
     }
 
     fun clickLogin() {
-        if (checkIfExists("Log in")) {
+        if (checkIfTextExists("Log in")) {
             val element = driver.findElement(By.className("login-button-31D24"))
             driver.executeScript("arguments[0].click();", element)
         }
     }
 }
 
-open class BrowseTo(baseUrl: String, geckoDriverPath1: String) {
-    var driver = FirefoxDriver()
+open class BrowseTo(baseUrl: String, geckoDriverPath1: String, firefoxProfile: String) {
+    var driver: FirefoxDriver
+    var options = FirefoxOptions()
     val baseUrl = "https://www.reddit.com"
-    val time = Duration.ofSeconds(3)
-    var wait = WebDriverWait(driver, time)
 
     init {
         System.setProperty("webdriver.gecko.driver", geckoDriverPath1)
         System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null")
+        val profile = FirefoxProfile(File(firefoxProfile))
+
+        profile.setPreference("dom.webdriver.enabled", false)
+        profile.setPreference("useAutomationExtension", false)
+        options.profile = profile
+        options.addArguments("--width=2560")
+        options.addArguments("--height=1440")
+        options.setLogLevel(FirefoxDriverLogLevel.FATAL)
+        driver = FirefoxDriver(options)
         driver[baseUrl]
+
     }
 
     fun sendText(text: String, selector: String) {
-        if (checkIfExists(selector)) {
+        sleep()
+        if (checkIfTextExists(selector)) {
             driver.findElement(By.name(selector)).sendKeys(text)
         }
     }
 
     fun sendTextByDivClass(text: String, selector: String) {
+        sleep()
         val ele = driver.findElements(By.className(selector)).isNotEmpty()
         if (ele) {
             driver.findElement(By.className(selector)).sendKeys(text)
@@ -57,14 +71,17 @@ open class BrowseTo(baseUrl: String, geckoDriverPath1: String) {
     }
 
     fun clickText(selector: String) {
-        if (checkIfExists(selector)) {
+        sleep()
+        if (checkIfTextExists(selector)) {
             val element = driver.findElement(By.xpath("//*[text()[contains(., '$selector')]]"))
             driver.executeScript("arguments[0].click();", element)
         }
     }
-
-    fun checkIfExists(selector: String): Boolean {
-        Thread.sleep(300)
+    fun sleep(){
+        val rand = (500..2000).random()
+        Thread.sleep(rand.toLong())
+    }
+    fun checkIfTextExists(selector: String): Boolean {
         return driver.findElements(By.xpath("//*[text()[contains(., '$selector')]]")).isNotEmpty()
     }
 

@@ -7,7 +7,7 @@ import java.io.File
 
 
 //Requires gecko driver... 'which geckodriver'
-class createScreenshot(baseUrl: String, geckoDriverPath1:String): BrowseTo(baseUrl = baseUrl,geckoDriverPath1 = geckoDriverPath1 ){
+class createScreenshot(baseUrl: String, geckoDriverPath1:String, firefoxProfile: String): BrowseTo(baseUrl = baseUrl,geckoDriverPath1 = geckoDriverPath1,firefoxProfile= firefoxProfile){
     init {
         System.setProperty("webdriver.gecko.driver", geckoDriverPath1)
         System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null")

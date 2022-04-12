@@ -1,9 +1,10 @@
 
 import openpablo.tiktokinjector.*
+import openpablo.tiktokinjector.Reddit.RedditDataHandler
 import openpablo.tiktokinjector.media.createScreenshot
 import java.io.File
 
-fun main() {
+suspend fun main() {
     val id = System.getenv("id")
     val secret = System.getenv("secret")
     val username = System.getenv("username")
@@ -14,10 +15,10 @@ fun main() {
 
     val db  = RedditDataHandler(mongoConnStr)
     val reddit = RedditScraper(id, secret)
-    //reddit.login(username, password)
-    //scrapeSubreddits(reddit, subRedditList, db, 10, 300)
-    //reddit.close()
-    val snapper = createScreenshot("https://www.reddit.com","/usr/bin/geckodriver")
+    reddit.login(username, password)
+    scrapeSubreddits(reddit, subRedditList, db, 10, 300)
+    reddit.close()
+    val snapper = createScreenshot("https://www.reddit.com","/usr/bin/geckodriver", "/home/pablo/.mozilla/firefox/jg72zd8v.default")
 
     File("output.txt").readLines().forEach {
         val thread = db.getThread(it)
