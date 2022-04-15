@@ -6,32 +6,19 @@ import org.openqa.selenium.firefox.FirefoxDriverLogLevel
 import org.openqa.selenium.firefox.FirefoxOptions
 import org.openqa.selenium.firefox.FirefoxProfile
 import org.openqa.selenium.remote.DesiredCapabilities
+import org.openqa.selenium.support.ui.ExpectedConditions
+import org.openqa.selenium.support.ui.WebDriverWait
 import java.io.File
 
 
 class TikTokUploader(baseUrl: String, geckoDriverPath1: String, firefoxProfile: String) :
     BrowseTo(baseUrl = baseUrl, geckoDriverPath1 = geckoDriverPath1, firefoxProfile = firefoxProfile) {
-    fun login(username: String,password: String) {
-        Thread.sleep(1000)
-        clickText("Use phone / email / username")
-        clickText("Log in with email or username")
-        sendText(username, "email")
-        sendText(password, "password")
-        clickLogin()
-    }
-
     fun upload(filename: String, tags: String) {
         Thread.sleep(2_000)
         driver["https://www.tiktok.com/upload"]
         sendTextByDivClass(tags, "public-DraftStyleDefault-ltr")
     }
 
-    fun clickLogin() {
-        if (checkIfTextExists("Log in")) {
-            val element = driver.findElement(By.className("login-button-31D24"))
-            driver.executeScript("arguments[0].click();", element)
-        }
-    }
 }
 
 open class BrowseTo(baseUrl: String, geckoDriverPath1: String, firefoxProfile: String) {
@@ -55,13 +42,6 @@ open class BrowseTo(baseUrl: String, geckoDriverPath1: String, firefoxProfile: S
 
     }
 
-    fun sendText(text: String, selector: String) {
-        sleep()
-        if (checkIfTextExists(selector)) {
-            driver.findElement(By.name(selector)).sendKeys(text)
-        }
-    }
-
     fun sendTextByDivClass(text: String, selector: String) {
         sleep()
         val ele = driver.findElements(By.className(selector)).isNotEmpty()
@@ -70,10 +50,9 @@ open class BrowseTo(baseUrl: String, geckoDriverPath1: String, firefoxProfile: S
         }
     }
 
-    fun clickText(selector: String) {
-        sleep()
-        if (checkIfTextExists(selector)) {
-            val element = driver.findElement(By.xpath("//*[text()[contains(., '$selector')]]"))
+    fun clickXpath(selector: String) {
+        if (checkifExistsXpath(selector)) {
+            val element = driver.findElement(By.xpath(selector))
             driver.executeScript("arguments[0].click();", element)
         }
     }
@@ -81,8 +60,11 @@ open class BrowseTo(baseUrl: String, geckoDriverPath1: String, firefoxProfile: S
         val rand = (500..2000).random()
         Thread.sleep(rand.toLong())
     }
-    fun checkIfTextExists(selector: String): Boolean {
-        return driver.findElements(By.xpath("//*[text()[contains(., '$selector')]]")).isNotEmpty()
+    fun checkifExistsXpath(selector: String): Boolean {
+        val time = java.time.Duration.ofSeconds(5)
+        val webdriver = WebDriverWait(driver, time)
+        webdriver.until(ExpectedConditions.elementToBeClickable(By.xpath(selector)))
+        return driver.findElements(By.xpath(selector)).isNotEmpty()
     }
 
     fun close() {

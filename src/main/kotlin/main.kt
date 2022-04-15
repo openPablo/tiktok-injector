@@ -14,16 +14,20 @@ suspend fun main() {
 
 
     val db  = RedditDataHandler(mongoConnStr)
-    val reddit = RedditScraper(id, secret)
-    reddit.login(username, password)
-    scrapeSubreddits(reddit, subRedditList, db, 10, 300)
-    reddit.close()
+    //val reddit = RedditScraper(id, secret)
+    //reddit.login(username, password)
+    //scrapeSubreddits(reddit, subRedditList, db, 6, 300)
+    //reddit.close()
     val snapper = createScreenshot("https://www.reddit.com","/usr/bin/geckodriver", "/home/pablo/.mozilla/firefox/jg72zd8v.default")
 
     File("output.txt").readLines().forEach {
         val thread = db.getThread(it)
         if (thread != null){
-            composeVideo(thread, snapper)
+            try {
+                composeVideo(thread, snapper)
+            } catch (ex: Exception){
+                println("Failed making vid for ${thread._id}")
+            }
         }
     }
     snapper.close()

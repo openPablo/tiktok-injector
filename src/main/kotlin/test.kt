@@ -9,7 +9,6 @@ fun main() {
         "/usr/bin/geckodriver",
         "/home/pablo/.mozilla/firefox/jg72zd8v.default"
     )
-    tiktok.login(username, password)
     tiktok.upload("/tmp/test", "#fyp #reddit #relationship #redditreadings #redditstories #reddit_tiktok")
 
 }

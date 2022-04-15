@@ -18,10 +18,12 @@ fun textToSpeech(text: String, filename: String, randomizeVoice: Boolean) {
                     .build()
             if (randomizeVoice) {
                 val voiceName = pickRandomVoice(voiceList)
+                var gender = if (voiceName[2] == "MALE")  SsmlVoiceGender.MALE else  SsmlVoiceGender.FEMALE
                 voice =
                     VoiceSelectionParams.newBuilder()
                         .setLanguageCode(voiceName[0])
                         .setName(voiceName[1])
+                        .setSsmlGender(gender)
                         .build()
             }
 
@@ -36,11 +38,8 @@ fun textToSpeech(text: String, filename: String, randomizeVoice: Boolean) {
             val audioContents: ByteString = response.audioContent
             FileOutputStream(filename).use { out ->
                 out.write(audioContents.toByteArray())
-                println("Audio content written to file \"$filename\"")
             }
         }
-    } else {
-        println("Speech file was already generated!")
     }
 
 }
@@ -57,43 +56,43 @@ private fun removeUrl(commentstr: String): String {
 }
 
 var voiceList = listOf(
-    "en-AU:Wavenet-A",
-    "en-AU:Wavenet-B",
-    "en-AU:Wavenet-C",
-    "en-AU:Wavenet-D",
-    "en-US:Wavenet-A",
-    "en-US:Wavenet-B",
-    "en-US:Wavenet-C",
-    "en-US:Wavenet-D",
-    "en-US:Wavenet-E",
-    "en-US:Wavenet-F",
-    "en-US:Wavenet-G",
-    "en-US:Wavenet-H",
-    "en-US:Wavenet-I",
-    "en-US:Wavenet-J",
-    "en-US:Wavenet-A",
-    "en-US:Wavenet-B",
-    "en-US:Wavenet-C",
-    "en-US:Wavenet-D",
-    "en-US:Wavenet-E",
-    "en-US:Wavenet-F",
-    "en-US:Wavenet-G",
-    "en-US:Wavenet-H",
-    "en-US:Wavenet-I",
-    "en-US:Wavenet-J",
-    "en-GB:Wavenet-A",
-    "en-GB:Wavenet-B",
-    "en-GB:Wavenet-C",
-    "en-GB:Wavenet-D",
-    "en-GB:Wavenet-F",
-    "en-US:Wavenet-A",
-    "en-US:Wavenet-B",
-    "en-US:Wavenet-C",
-    "en-US:Wavenet-D",
-    "en-US:Wavenet-E",
-    "en-US:Wavenet-F",
-    "en-US:Wavenet-G",
-    "en-US:Wavenet-H",
-    "en-US:Wavenet-I",
-    "en-US:Wavenet-J"
+    "en-AU:en-AU-Wavenet-A:FEMALE",
+    "en-AU:en-AU-Wavenet-B:MALE",
+    "en-AU:en-AU-Wavenet-C:FEMALE",
+    "en-AU:en-AU-Wavenet-D:MALE",
+    "en-US:en-US-Wavenet-A:MALE",
+    "en-US:en-US-Wavenet-B:MALE",
+    "en-US:en-US-Wavenet-C:FEMALE",
+    "en-US:en-US-Wavenet-D:MALE",
+    "en-US:en-US-Wavenet-E:FEMALE",
+    "en-US:en-US-Wavenet-F:FEMALE",
+    "en-US:en-US-Wavenet-G:FEMALE",
+    "en-US:en-US-Wavenet-H:FEMALE",
+    "en-US:en-US-Wavenet-I:MALE",
+    "en-US:en-US-Wavenet-J:MALE",
+    "en-US:en-US-Wavenet-A:MALE",
+    "en-US:en-US-Wavenet-B:MALE",
+    "en-US:en-US-Wavenet-C:FEMALE",
+    "en-US:en-US-Wavenet-D:MALE",
+    "en-US:en-US-Wavenet-E:FEMALE",
+    "en-US:en-US-Wavenet-F:FEMALE",
+    "en-US:en-US-Wavenet-G:FEMALE",
+    "en-US:en-US-Wavenet-H:FEMALE",
+    "en-US:en-US-Wavenet-I:MALE",
+    "en-US:en-US-Wavenet-J:MALE",
+    "en-GB:en-GB-Wavenet-A:FEMALE",
+    "en-GB:en-GB-Wavenet-B:MALE",
+    "en-GB:en-GB-Wavenet-C:FEMALE",
+    "en-GB:en-GB-Wavenet-D:MALE",
+    "en-GB:en-GB-Wavenet-F:FEMALE",
+    "en-US:en-US-Wavenet-A:MALE",
+    "en-US:en-US-Wavenet-B:MALE",
+    "en-US:en-US-Wavenet-C:FEMALE",
+    "en-US:en-US-Wavenet-D:MALE",
+    "en-US:en-US-Wavenet-E:FEMALE",
+    "en-US:en-US-Wavenet-F:FEMALE",
+    "en-US:en-US-Wavenet-G:FEMALE",
+    "en-US:en-US-Wavenet-H:FEMALE",
+    "en-US:en-US-Wavenet-I:MALE",
+    "en-US:en-US-Wavenet-J:MALE"
 )

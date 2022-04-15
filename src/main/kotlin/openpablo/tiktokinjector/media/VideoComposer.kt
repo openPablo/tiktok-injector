@@ -11,7 +11,7 @@ class VideoComposer(val filename: String, val aspect_ratio: Double, var maxDurat
     var width = 0
     var duration = 0.00
     var vidIsFull = false      //stop accepting vids if attempted to surpass maxDuration
-    var skippedPosts = 0
+    var skippedClips = 0
 
     fun addAudio(audioFile: String): Double {
         val clipLength = getLength(audioFile)
@@ -19,7 +19,7 @@ class VideoComposer(val filename: String, val aspect_ratio: Double, var maxDurat
             audioFiles.add(audioFile)
             duration += clipLength
         }else {
-            skipPost()
+            skipClip()
             return 0.00
         }
         return clipLength
@@ -27,9 +27,9 @@ class VideoComposer(val filename: String, val aspect_ratio: Double, var maxDurat
     fun getLength(audioFile: String): Double{
         return execute("ffprobe -i $audioFile -show_entries format=duration -v quiet -of csv=\"p=0\"").toDouble()
     }
-    fun skipPost(){
-        skippedPosts += 1
-        if (skippedPosts >= 3){
+    fun skipClip(){
+        skippedClips += 1
+        if (skippedClips >= 2){
             vidIsFull = true
         }
     }
@@ -86,7 +86,7 @@ class VideoComposer(val filename: String, val aspect_ratio: Double, var maxDurat
             val imageEndTime = startTime + image.value
             cmd += " [$imageNr]scale=$width:-1 [pic$imageNr]; " +  //Scales the image to the video width
                     "[vid$imageNr][pic$imageNr] overlay = " +
-                    "(W-w)/2:(H-h)/2:enable='between(t,$startTime,${imageEndTime})' " +  //sets image in center of vid
+                    "(W-w)/2:(H-h)-100:enable='between(t,$startTime,${imageEndTime})' " +  //sets image in center of vid
                     "[vid${imageNr + 1}] "
             if (imageNr < length) {       //check because the last item can't have a ';'
                 cmd += ";"
@@ -99,7 +99,7 @@ class VideoComposer(val filename: String, val aspect_ratio: Double, var maxDurat
                 "-map \"[vid$imageNr]:v\" -map \"1:a\" " +      //Overlay audio file over video
                 "-t $duration " +                               //sets video length
                 " $output"
-        println("Rendering: ")
+        println("Rendering: \n$cmd")
         val elapsed = measureTimeMillis {
         execute(cmd)
         }
@@ -107,7 +107,6 @@ class VideoComposer(val filename: String, val aspect_ratio: Double, var maxDurat
     }
 
     private fun execute(cmd: String): String {
-        println("Executing: $cmd")
         val pb = ProcessBuilder("sh", "-c", cmd)
         val process = pb.start()
         return String(process.inputStream.readAllBytes())
