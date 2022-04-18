@@ -30,12 +30,14 @@ open class BrowseTo(val baseUrl: String, pathToDriver: String, chromeProfile: St
         WebDriverWait(driver, timout).until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath))).sendKeys(text)
     }
     fun clickByXpath(xpath: String){
+        sleep()
         val timout = Duration.ofSeconds(150)
         WebDriverWait(driver, timout).until(ExpectedConditions.elementToBeClickable(By.xpath(xpath))).click()
     }
     fun waitUntilXpath(xpath: String){
-        val timout = Duration.ofSeconds(10)
-        WebDriverWait(driver, timout).until(ExpectedConditions.presenceOfElementLocated(By.className(xpath))).click()
+        sleep()
+        val timout = Duration.ofSeconds(15)
+        WebDriverWait(driver, timout).until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath))).click()
     }
     fun clickXpath(selector: String) {
         if (checkifExistsXpath(selector)) {

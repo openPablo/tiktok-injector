@@ -21,25 +21,10 @@ suspend fun main() {
 
     val db = RedditDataHandler(mongoConnStr)
     val reddit = RedditScraper(id, secret)
-    //reddit.login(username, password)
-    //scrapeSubreddits(reddit, subRedditList, db, 6, 300)
-    //reddit.close()
-    //val snapper = PostScreenshotter(
-    //    "https://www.reddit.com",
-    //    "/usr/bin/chromedriver",
-    //    "user-data-dir=/home/pablo/.config/google-chrome/Profile 1"
-    //)
-    //File("output.txt").readLines().forEach {
-    //    val thread = db.getThread(it)
-    //    if (thread != null) {
-    //        try {
-    //            composeVideo(thread, snapper)
-    //        } catch (Ex: java.lang.Exception) {
-    //            println("Failed for ${thread._id}")
-    //        }
-    //    }
-    //}
-    //snapper.close()
+    reddit.login(username, password)
+
+    scrapeSubreddits(reddit, subRedditList, db, 3, 300)
+    createTiktoks(db)
     uploadTiktoks()
 }
 
@@ -60,7 +45,33 @@ suspend fun scrapeSubreddits(
     }
     db.sendThreads(threads)
     db.writeThreads(threads)
+    reddit.close()
     return threads
+}
+
+fun createTiktoks(db: RedditDataHandler) {
+    val snapper = PostScreenshotter(
+        "https://www.reddit.com",
+        "/usr/bin/chromedriver",
+        "user-data-dir=/home/pablo/.config/google-chrome/Profile 1"
+    )
+    val todoVids = File("output.txt").readLines()
+    val failedVids = mutableListOf<String>("")
+    todoVids.forEach {
+        val thread = db.getThread(it)
+        if (thread != null) {
+            try {
+                composeVideo(thread, snapper)
+            } catch (Ex: java.lang.Exception) {
+                failedVids.add(thread._id)
+                println("Failed for ${thread._id}")
+            }
+        }
+    }
+    failedVids.forEach {
+        File("output.txt").writeText(it)
+    }
+    snapper.close()
 }
 
 fun uploadTiktoks() {
@@ -69,16 +80,16 @@ fun uploadTiktoks() {
         "/usr/bin/chromedriver",
         "user-data-dir=/home/pablo/.config/google-chrome/Profile 1"
     )
-    val folder = File("/home/pablo/tiktok/composed_videos")
-    val doneFolder = File("/home/pablo/tiktok/uploaded")
-    folder.listFiles().forEach { video ->
+    val uploadDir = File("/home/pablo/tiktok/composed_videos")
+    uploadDir.listFiles().forEach { video ->
+        println("Uploading ${video.absolutePath}")
         try {
             tiktok.upload(
                 video.absolutePath,
                 "#fyp #reddit #relationship #redditreadings #redditstories #reddit_tiktok"
             )
-            val sourcePath = Paths.get(folder.absolutePath)
-            val targetPath = Paths.get(doneFolder.absolutePath)
+            val sourcePath = Paths.get(video.absolutePath)
+            val targetPath = Paths.get(video.absolutePath.replace("composed_videos", "uploaded"))
             Files.move(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING)
         } catch (ex: Exception) {
             println("Failed uploading ${video.absolutePath}")
