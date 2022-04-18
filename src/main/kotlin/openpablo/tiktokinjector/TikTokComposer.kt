@@ -6,29 +6,26 @@ import openpablo.tiktokinjector.media.VideoComposer
 import openpablo.tiktokinjector.Reddit.PostScreenshotter
 import java.io.File
 
-
-val workingDir = "/home/pablo/tiktok"
-
-fun composeVideo(thread: RedditThread, snapper: PostScreenshotter) {
+fun composeVideo(thread: RedditThread, snapper: PostScreenshotter, workingDir: String) {
     if (thread.text.length < 200) {
-        generateVid(59.00, thread, snapper)
+        generateVid(59.00, thread, snapper, workingDir)
     } else if (thread.text.length < 2000) {
-        generateVid(179.00, thread, snapper)
+        generateVid(179.00, thread, snapper, workingDir)
     } else {
         println("Skipped, OP was too long for ${thread._id}\"")
     }
-    saveId("done.txt", thread._id)
+    saveId("$workingDir/output.txt", thread._id)
 }
 
-fun generateVid(maxDuration: Double, thread: RedditThread, snapper: PostScreenshotter) {
+fun generateVid(maxDuration: Double, thread: RedditThread, snapper: PostScreenshotter, workingDir: String) {
     val backGroundVid = pickRandomVideo("$workingDir/raw_videos")
     val tiktok = VideoComposer(backGroundVid, 9.00 / 16.00, maxDuration)
     println("Generating audio and screenshots for ${thread._id}")
-    generateAttributes(thread, snapper, false, tiktok, true)
+    generateAttributes(thread, snapper, false, tiktok, true, workingDir)
     var i = 0
     while (!tiktok.vidIsFull) {
         if (thread.posts[i].text.length < 1500) {
-            generateAttributes(thread.posts[i], snapper, true, tiktok, false)
+            generateAttributes(thread.posts[i], snapper, true, tiktok, false, workingDir)
         } else {
             tiktok.skipClip()
         }
@@ -42,7 +39,8 @@ fun generateAttributes(
     screenshotObject: PostScreenshotter,
     isVoiceRandomized: Boolean,
     tiktok: VideoComposer,
-    isOP: Boolean
+    isOP: Boolean,
+    workingDir: String
 ) {
     if (target.text.length < 250) {
         val musicFile = "$workingDir/voice/${target.name}.wav"
@@ -56,12 +54,12 @@ fun generateAttributes(
         val paragraphs = target.text.split("\n\n")
         val tts = TextToSpeech(isVoiceRandomized)
         paragraphs.forEachIndexed() { i, paragraph ->
-            if (paragraph != null){
+            if (paragraph != null) {
                 val musicFile = "$workingDir/voice/${target.name}_$i.wav"
                 val imageFile = "$workingDir/screenshots/${target.name}_$i.png"
                 tts.textToSpeech(paragraph, musicFile)
                 var screenshotText = paragraph
-                if(isOP && i == 0) {
+                if (isOP && i == 0) {
                     screenshotText = "..."
                 }
                 screenshotObject.snap(target.name, target.permalink, imageFile, screenshotText)

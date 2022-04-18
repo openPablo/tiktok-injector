@@ -23,9 +23,9 @@ class RedditDataHandler(mongoConn: String) {
         println("Wrote threads to database :^)")
     }
 
-    fun sendThreads(threads: MutableList<RedditThread>) {
+    fun sendThreads(threads: MutableList<RedditThread>, outputFile: String) {
         threads.forEach {
-            saveId("output.txt", it._id)
+            saveId(outputFile, it._id)
         }
         println("send to queue! :)")
     }

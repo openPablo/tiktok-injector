@@ -9,6 +9,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
 
+
 suspend fun main() {
     val id = System.getenv("id")
     val secret = System.getenv("secret")
@@ -19,13 +20,33 @@ suspend fun main() {
         "AskReddit relationship_advice amItheAsshole TrueOffMyChest AskRedditAfterDark".split(" ").toTypedArray()
 
 
+    val baseDir = "/home/pablo/tiktok"
+    prepareWorkDir(baseDir)
+
     val db = RedditDataHandler(mongoConnStr)
     val reddit = RedditScraper(id, secret)
     reddit.login(username, password)
 
-    scrapeSubreddits(reddit, subRedditList, db, 3, 300)
-    createTiktoks(db)
-    uploadTiktoks()
+    scrapeSubreddits(reddit, subRedditList, db, 3, 300, baseDir)
+    createTiktoks(db, baseDir)
+    uploadTiktoks(baseDir)
+}
+fun prepareWorkDir(baseDir: String) {
+    makeDirIfNotExist(baseDir)
+    makeDirIfNotExist("$baseDir/voice")
+    makeDirIfNotExist("$baseDir/uploaded")
+    makeDirIfNotExist("$baseDir/screenshots")
+    makeDirIfNotExist("$baseDir/raw_videos")
+    makeDirIfNotExist("$baseDir/composed_videos")
+    File("$baseDir/output.txt").createNewFile()
+    File("$baseDir/done.txt").createNewFile()
+}
+
+fun makeDirIfNotExist(path: String) {
+    val directory = File(path)
+    if (!directory.exists()) {
+        directory.mkdir()
+    }
 }
 
 suspend fun scrapeSubreddits(
@@ -33,7 +54,8 @@ suspend fun scrapeSubreddits(
     subRedditList: Array<String>,
     db: RedditDataHandler,
     limitThread: Int,
-    limitPosts: Int
+    limitPosts: Int,
+    baseDir: String
 ): MutableList<RedditThread> {
     val threads: MutableList<RedditThread> = ArrayList()
     subRedditList.forEach { subReddit ->
@@ -43,25 +65,25 @@ suspend fun scrapeSubreddits(
         }
         threads.addAll(newThreads)
     }
-    db.sendThreads(threads)
+    db.sendThreads(threads, "$baseDir/output.txt")
     db.writeThreads(threads)
     reddit.close()
     return threads
 }
 
-fun createTiktoks(db: RedditDataHandler) {
+fun createTiktoks(db: RedditDataHandler, baseDir: String) {
     val snapper = PostScreenshotter(
         "https://www.reddit.com",
         "/usr/bin/chromedriver",
         "user-data-dir=/home/pablo/.config/google-chrome/Profile 1"
     )
-    val todoVids = File("output.txt").readLines()
+    val todoVids = File("$baseDir/output.txt").readLines()
     val failedVids = mutableListOf<String>("")
     todoVids.forEach {
         val thread = db.getThread(it)
         if (thread != null) {
             try {
-                composeVideo(thread, snapper)
+                composeVideo(thread, snapper, baseDir)
             } catch (Ex: java.lang.Exception) {
                 failedVids.add(thread._id)
                 println("Failed for ${thread._id}")
@@ -69,18 +91,18 @@ fun createTiktoks(db: RedditDataHandler) {
         }
     }
     failedVids.forEach {
-        File("output.txt").writeText(it)
+        File("$baseDir/output.txt").writeText(it)
     }
     snapper.close()
 }
 
-fun uploadTiktoks() {
+fun uploadTiktoks(baseDir: String) {
     val tiktok = TikTokUploader(
         "https://www.tiktok.com/upload",
         "/usr/bin/chromedriver",
         "user-data-dir=/home/pablo/.config/google-chrome/Profile 1"
     )
-    val uploadDir = File("/home/pablo/tiktok/composed_videos")
+    val uploadDir = File("$baseDir/composed_videos")
     uploadDir.listFiles().forEach { video ->
         println("Uploading ${video.absolutePath}")
         try {

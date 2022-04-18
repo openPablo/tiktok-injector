@@ -5,9 +5,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.chrome.ChromeDriver
-import org.openqa.selenium.chrome.ChromeDriverService
-import java.io.File
 import java.time.Duration
+import java.util.logging.Level
 
 open class BrowseTo(val baseUrl: String, pathToDriver: String, chromeProfile: String) {
     var driver: ChromeDriver
@@ -20,6 +19,8 @@ open class BrowseTo(val baseUrl: String, pathToDriver: String, chromeProfile: St
         options.addArguments(chromeProfile)
         options.addArguments("--window-size=1280,1440")
         System.setProperty("webdriver.chrome.driver",pathToDriver);
+        System.setProperty("webdriver.chrome.silentOutput", "true");
+        java.util.logging.Logger.getLogger("org.openqa.selenium").setLevel(Level.SEVERE);
         driver = ChromeDriver(options)
         driver[baseUrl]
     }
