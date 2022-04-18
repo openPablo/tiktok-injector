@@ -2,7 +2,7 @@
 
  * FFmpeg
  * Nvidia cuda drivers if using GPU accelerated video rendering
- * Geckodriver for taking screenshots
+ * Chromedriver and google chrome
 
 
 # Getting raw videos
