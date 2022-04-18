@@ -56,16 +56,18 @@ fun generateAttributes(
         val paragraphs = target.text.split("\n\n")
         val tts = TextToSpeech(isVoiceRandomized)
         paragraphs.forEachIndexed() { i, paragraph ->
-            val musicFile = "$workingDir/voice/${target.name}_$i.wav"
-            val imageFile = "$workingDir/screenshots/${target.name}_$i.png"
-            tts.textToSpeech(paragraph, musicFile)
-            var screenshotText = paragraph
-            if(isOP && i == 0) {
-                screenshotText = "..."
+            if (paragraph != null){
+                val musicFile = "$workingDir/voice/${target.name}_$i.wav"
+                val imageFile = "$workingDir/screenshots/${target.name}_$i.png"
+                tts.textToSpeech(paragraph, musicFile)
+                var screenshotText = paragraph
+                if(isOP && i == 0) {
+                    screenshotText = "..."
+                }
+                screenshotObject.snap(target.name, target.permalink, imageFile, screenshotText)
+                val length = tiktok.addAudio(musicFile)
+                tiktok.addImage(imageFile, length)
             }
-            screenshotObject.snap(target.name, target.permalink, imageFile, screenshotText)
-            val length = tiktok.addAudio(musicFile)
-            tiktok.addImage(imageFile, length)
         }
     }
 }
