@@ -2,6 +2,10 @@ package openpablo.tiktokinjector
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import org.apache.commons.text.StringEscapeUtils
+import org.jsoup.Jsoup
+import org.jsoup.safety.Safelist
+import org.jsoup.nodes.Document
 
 @Serializable
 open class RedditObject {
@@ -90,8 +94,8 @@ data class RedditThread(
     var posts: List<RedditPost> = ArrayList()
 ) : RedditObject() {
     init {
-        text = title + selftext
-        text = removeUrl(text)
+        text = title + "\n\n" +  selftext_html
+        text = sanitize(text)
     }
 }
 
@@ -177,15 +181,14 @@ data class RedditPost(
     var is_video: Boolean? = null,
 ) : RedditObject() {
     init {
-        if (body != null) {
-            text = body
-            text = removeUrl(text)
-        } else {
-            text = ""
-        }
+        text = body_html.toString()
+        text = sanitize(text)
     }
 }
 
-private fun removeUrl(commentstr: String): String {
-    return commentstr.replace("http.*?(\\Z|\\s)".toRegex(), "")
+private fun sanitize(commentstr: String): String {
+    var sanitized = StringEscapeUtils.unescapeHtml4(commentstr);
+    sanitized = Jsoup.clean(sanitized, "", Safelist.none(), Document.OutputSettings().prettyPrint(false))
+    sanitized =  sanitized.replace("http.*?(\\Z|\\s)".toRegex(), "")
+    return sanitized
 }

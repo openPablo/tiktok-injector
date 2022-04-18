@@ -1,7 +1,7 @@
 
 import openpablo.tiktokinjector.*
 import openpablo.tiktokinjector.Reddit.RedditDataHandler
-import openpablo.tiktokinjector.media.createScreenshot
+import openpablo.tiktokinjector.media.CreateScreenshot
 import java.io.File
 
 suspend fun main() {
@@ -14,20 +14,18 @@ suspend fun main() {
 
 
     val db  = RedditDataHandler(mongoConnStr)
-    //val reddit = RedditScraper(id, secret)
-    //reddit.login(username, password)
-    //scrapeSubreddits(reddit, subRedditList, db, 6, 300)
-    //reddit.close()
-    val snapper = createScreenshot("https://www.reddit.com","/usr/bin/geckodriver", "/home/pablo/.mozilla/firefox/jg72zd8v.default")
+    val reddit = RedditScraper(id, secret)
+    reddit.login(username, password)
+    scrapeSubreddits(reddit, subRedditList, db, 6, 300)
+    reddit.close()
+    val snapper = CreateScreenshot("https://www.reddit.com","/usr/bin/geckodriver", "/home/pablo/.mozilla/firefox/jg72zd8v.default")
 
     File("output.txt").readLines().forEach {
         val thread = db.getThread(it)
         if (thread != null){
-            try {
+
                 composeVideo(thread, snapper)
-            } catch (ex: Exception){
-                println("Failed making vid for ${thread._id}")
-            }
+
         }
     }
     snapper.close()

@@ -5,7 +5,6 @@ import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.firefox.FirefoxDriverLogLevel
 import org.openqa.selenium.firefox.FirefoxOptions
 import org.openqa.selenium.firefox.FirefoxProfile
-import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 import java.io.File
@@ -34,7 +33,7 @@ open class BrowseTo(baseUrl: String, geckoDriverPath1: String, firefoxProfile: S
         profile.setPreference("dom.webdriver.enabled", false)
         profile.setPreference("useAutomationExtension", false)
         options.profile = profile
-        options.addArguments("--width=2560")
+        options.addArguments("--width=1280")
         options.addArguments("--height=1440")
         options.setLogLevel(FirefoxDriverLogLevel.FATAL)
         driver = FirefoxDriver(options)
@@ -56,15 +55,19 @@ open class BrowseTo(baseUrl: String, geckoDriverPath1: String, firefoxProfile: S
             driver.executeScript("arguments[0].click();", element)
         }
     }
-    fun sleep(){
+    private fun sleep(){
         val rand = (500..2000).random()
         Thread.sleep(rand.toLong())
     }
     fun checkifExistsXpath(selector: String): Boolean {
         val time = java.time.Duration.ofSeconds(5)
         val webdriver = WebDriverWait(driver, time)
-        webdriver.until(ExpectedConditions.elementToBeClickable(By.xpath(selector)))
-        return driver.findElements(By.xpath(selector)).isNotEmpty()
+        return try{
+            webdriver.until(ExpectedConditions.elementToBeClickable(By.xpath(selector)))
+            true
+        } catch (ex: Exception) {
+            false
+        }
     }
 
     fun close() {

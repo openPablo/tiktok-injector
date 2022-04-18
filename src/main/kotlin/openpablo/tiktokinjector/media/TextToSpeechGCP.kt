@@ -5,44 +5,54 @@ import com.google.protobuf.ByteString
 import java.io.File
 import java.io.FileOutputStream
 
-fun textToSpeech(text: String, filename: String, randomizeVoice: Boolean) {
-    val file = File(filename)
-    if (!isFileExists(file)) {
-        val sanitized = removeUrl(text)
-        TextToSpeechClient.create().use { textToSpeechClient ->
-            val input = SynthesisInput.newBuilder().setText(sanitized).build()
-            var voice =
-                VoiceSelectionParams.newBuilder()
-                    .setLanguageCode("en-US")
-                    .setSsmlGender(SsmlVoiceGender.MALE)
-                    .build()
-            if (randomizeVoice) {
-                val voiceName = pickRandomVoice(voiceList)
-                var gender = if (voiceName[2] == "MALE")  SsmlVoiceGender.MALE else  SsmlVoiceGender.FEMALE
-                voice =
-                    VoiceSelectionParams.newBuilder()
-                        .setLanguageCode(voiceName[0])
-                        .setName(voiceName[1])
-                        .setSsmlGender(gender)
-                        .build()
-            }
+class TextToSpeech(randomizeVoice: Boolean) {
+    var voice: VoiceSelectionParams =
+        VoiceSelectionParams.newBuilder()
+            .setLanguageCode("en-US")
+            .setSsmlGender(SsmlVoiceGender.MALE)
+            .build()
 
-            val audioConfig =
-                AudioConfig.newBuilder()
-                    .setAudioEncoding(AudioEncoding.LINEAR16).build() //wav file
+    init {
+        if (randomizeVoice) {
+            voice = selectVoice()
+        }
+    }
 
-            val response =
-                textToSpeechClient.synthesizeSpeech(input, voice, audioConfig)
+    fun textToSpeech(text: String, filename: String) {
+        val file = File(filename)
+        if (!isFileExists(file)) {
+            val sanitized = removeUrl(text)
+            TextToSpeechClient.create().use { textToSpeechClient ->
+                val input = SynthesisInput.newBuilder().setText(sanitized).build()
+                val audioConfig =
+                    AudioConfig.newBuilder()
+                        .setAudioEncoding(AudioEncoding.LINEAR16).build() //wav file
 
-            // Get the audio contents from the response
-            val audioContents: ByteString = response.audioContent
-            FileOutputStream(filename).use { out ->
-                out.write(audioContents.toByteArray())
+                val response =
+                    textToSpeechClient.synthesizeSpeech(input, voice, audioConfig)
+
+                // Get the audio contents from the response
+                val audioContents: ByteString = response.audioContent
+                FileOutputStream(filename).use { out ->
+                    out.write(audioContents.toByteArray())
+                }
             }
         }
     }
 
+    fun selectVoice(): VoiceSelectionParams {
+        val voiceName = pickRandomVoice(voiceList)
+        var gender = if (voiceName[2] == "MALE") SsmlVoiceGender.MALE else SsmlVoiceGender.FEMALE
+        voice =
+            VoiceSelectionParams.newBuilder()
+                .setLanguageCode(voiceName[0])
+                .setName(voiceName[1])
+                .setSsmlGender(gender)
+                .build()
+        return voice
+    }
 }
+
 
 fun isFileExists(file: File): Boolean {
     return file.exists() && !file.isDirectory
@@ -51,9 +61,11 @@ fun isFileExists(file: File): Boolean {
 fun pickRandomVoice(voices: List<String>): List<String> {
     return voices.random().split(":")
 }
+
 private fun removeUrl(commentstr: String): String {
     return commentstr.replace("http.*?(\\Z|\\s)".toRegex(), "")
 }
+
 
 var voiceList = listOf(
     "en-AU:en-AU-Wavenet-A:FEMALE",
