@@ -2,7 +2,6 @@ package openpablo.tiktokinjector.media
 
 import openpablo.tiktokinjector.BrowseTo
 import org.openqa.selenium.*
-import org.openqa.selenium.firefox.FirefoxDriver
 import java.io.File
 
 
@@ -25,26 +24,21 @@ class CreateScreenshot(baseUrl: String, geckoDriverPath1: String, firefoxProfile
                 clickXpath("//*[text()[contains(., 'Click to see nsfw')]]")
             }
 
-            val htmlElement = driver.findElements(By.id(id))
-            var screenshot: File
-            if (paragraph == "") {
-                screenshot = screenshot(htmlElement[0])
-                screenshot.copyTo(dest)
-            } else {
-                val pieces = paragraph.replace("'", "").chunked(10)
-                var i = 0
-                var found = false
-                while (i < pieces.size && !found) {
-                    val paragraphEles = htmlElement[0].findElements(By.xpath("//*[text()[contains(., '${pieces[i]}')]]"))
-                    if (paragraphEles.size > 0) {
-                        screenshot = screenshot(paragraphEles.last())
-                        found = true
-                        screenshot.copyTo(dest)
-                    }
-                    i += 1
-                }
+            val post = driver.findElements(By.id(id))[0]
+            if (paragraph != "") {
+                val postBody = post.findElement(By.xpath("//div[@class='_292iotee39Lmt0MkQZ2hPV RichTextJSON-root']"))
+                val htmlParagraph = "<p class=\"_1qeIAgB0cPwnLhDF9XSiJM\" > $paragraph</p>" +
+                                    "<p class=\"_1qeIAgB0cPwnLhDF9XSiJM\" > ... </p>"
+                editElement(postBody, htmlParagraph)
             }
+            val screenshot = screenshot(post)
+            screenshot.copyTo(dest)
         }
+    }
+
+    private fun editElement(element: WebElement, innerHtml: String) {
+        val js: JavascriptExecutor = driver
+        js.executeScript( "var ele=arguments[0]; ele.innerHTML = arguments[1];", element, innerHtml)
     }
 
     private fun screenshot(element: WebElement): File {
