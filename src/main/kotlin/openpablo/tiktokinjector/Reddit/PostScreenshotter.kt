@@ -1,13 +1,14 @@
-package openpablo.tiktokinjector.media
+package openpablo.tiktokinjector.Reddit
 
 import openpablo.tiktokinjector.BrowseTo
+import openpablo.tiktokinjector.media.isFileExists
 import org.openqa.selenium.*
 import java.io.File
 
 
 //Requires gecko driver... 'which geckodriver'
-class CreateScreenshot(baseUrl: String, geckoDriverPath1: String, firefoxProfile: String) :
-    BrowseTo(baseUrl = baseUrl, geckoDriverPath1 = geckoDriverPath1, firefoxProfile = firefoxProfile) {
+class PostScreenshotter(baseUrl: String, pathToDriver: String, chromeProfile: String) :
+    BrowseTo(baseUrl = baseUrl, pathToDriver = pathToDriver, chromeProfile = chromeProfile) {
     init {
         clickXpath("//*[text()[contains(., 'Accept all')]]")
     }
@@ -28,7 +29,7 @@ class CreateScreenshot(baseUrl: String, geckoDriverPath1: String, firefoxProfile
             if (paragraph != "") {
                 val postBody = post.findElement(By.xpath("//div[@class='_292iotee39Lmt0MkQZ2hPV RichTextJSON-root']"))
                 val htmlParagraph = "<p class=\"_1qeIAgB0cPwnLhDF9XSiJM\" > $paragraph</p>" +
-                                    "<p class=\"_1qeIAgB0cPwnLhDF9XSiJM\" > ... </p>"
+                                    "..."
                 editElement(postBody, htmlParagraph)
             }
             val screenshot = screenshot(post)

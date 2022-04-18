@@ -3,13 +3,13 @@ package openpablo.tiktokinjector
 import openpablo.tiktokinjector.Reddit.saveId
 import openpablo.tiktokinjector.media.TextToSpeech
 import openpablo.tiktokinjector.media.VideoComposer
-import openpablo.tiktokinjector.media.CreateScreenshot
+import openpablo.tiktokinjector.Reddit.PostScreenshotter
 import java.io.File
 
 
 val workingDir = "/home/pablo/tiktok"
 
-fun composeVideo(thread: RedditThread, snapper: CreateScreenshot) {
+fun composeVideo(thread: RedditThread, snapper: PostScreenshotter) {
     if (thread.text.length < 200) {
         generateVid(59.00, thread, snapper)
     } else if (thread.text.length < 2000) {
@@ -20,7 +20,7 @@ fun composeVideo(thread: RedditThread, snapper: CreateScreenshot) {
     saveId("done.txt", thread._id)
 }
 
-fun generateVid(maxDuration: Double, thread: RedditThread, snapper: CreateScreenshot) {
+fun generateVid(maxDuration: Double, thread: RedditThread, snapper: PostScreenshotter) {
     val backGroundVid = pickRandomVideo("$workingDir/raw_videos")
     val tiktok = VideoComposer(backGroundVid, 9.00 / 16.00, maxDuration)
     println("Generating audio and screenshots for ${thread._id}")
@@ -39,7 +39,7 @@ fun generateVid(maxDuration: Double, thread: RedditThread, snapper: CreateScreen
 
 fun generateAttributes(
     target: RedditObject,
-    screenshotObject: CreateScreenshot,
+    screenshotObject: PostScreenshotter,
     isVoiceRandomized: Boolean,
     tiktok: VideoComposer,
     isOP: Boolean
