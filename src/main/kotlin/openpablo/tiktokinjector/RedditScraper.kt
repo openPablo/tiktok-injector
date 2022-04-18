@@ -50,6 +50,7 @@ class RedditScraper(id: String, secret: String) {
             println("${time()} API call for threads of $subReddit ...: ${rawHttp.status}")
             threads = parseThreadJson(rawHttp.receive())
             threads.removeAll{it.stickied == true}
+            threads.removeAll{ it.ups!! < 1000}
             threads.forEach{thread ->
                 val params = mapOf("limit" to limitPosts.toString())
                 val posts = getPosts(thread,params, client)

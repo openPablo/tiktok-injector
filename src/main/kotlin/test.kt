@@ -6,9 +6,9 @@ fun main() {
 
     val tiktok = TikTokUploader(
         "https://www.tiktok.com/upload",
-        "/usr/bin/geckodriver",
-        "/home/pablo/.mozilla/firefox/jg72zd8v.default"
+        "/usr/bin/chromedriver",
+        "user-data-dir=/home/pablo/.config/google-chrome/Profile 1"
     )
-    tiktok.upload("/tmp/test", "#fyp #reddit #relationship #redditreadings #redditstories #reddit_tiktok")
+    tiktok.upload("/home/pablo/tiktok/composed_videos/t3_u67dli.mp4", "#fyp #reddit #relationship #redditreadings #redditstories #reddit_tiktok")
 
 }
