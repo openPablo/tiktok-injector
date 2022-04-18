@@ -5,6 +5,7 @@ import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.firefox.FirefoxDriverLogLevel
 import org.openqa.selenium.firefox.FirefoxOptions
 import org.openqa.selenium.firefox.FirefoxProfile
+import org.openqa.selenium.remote.RemoteWebDriver
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 import java.io.File
@@ -23,12 +24,25 @@ class TikTokUploader(baseUrl: String, geckoDriverPath1: String, firefoxProfile: 
 open class BrowseTo(baseUrl: String, geckoDriverPath1: String, firefoxProfile: String) {
     var driver: FirefoxDriver
     var options = FirefoxOptions()
-    val baseUrl = "https://www.reddit.com"
 
     init {
+        val profile = FirefoxProfile()
+        profile.setPreference(
+            "profile",
+            firefoxProfile
+        )
+
+        options.setCapability("browserName", "Firefox")
+        options.setCapability("browserVersion", "95.0")
+        val browserstackOptions = HashMap<String, Any>()
+        browserstackOptions["os"] = "OS X"
+        browserstackOptions["osVersion"] = "Monterey"
+        browserstackOptions["buildName"] = "Selenium Java Firefox Profile"
+        browserstackOptions["sessionName"] = "Selenium Java Firefox Profile"
+        options.setCapability("bstack:options", browserstackOptions)
+
         System.setProperty("webdriver.gecko.driver", geckoDriverPath1)
         System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null")
-        val profile = FirefoxProfile(File(firefoxProfile))
 
         profile.setPreference("dom.webdriver.enabled", false)
         profile.setPreference("useAutomationExtension", false)
