@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6c4606da-0744-41ce-bb77-5a9c166d0669" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/RedditScraper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/RedditScraper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/TikTokComposer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/TikTokComposer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/TikTokUploader.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/TikTokUploader.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/media/Browser.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/media/Browser.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/media/VideoComposer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/media/VideoComposer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/test.kt" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="tiktok-injector" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="tiktok-injector" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="27OPXXdwNL8u2kvN938v5MqUC6m" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/pablo/IdeaProjects/tiktok-injector/helperfiles/uploader.py&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src/main/kotlin" />
+      <recent name="$PROJECT_DIR$/src/main/kotlin/tiktok-injector" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/helperfiles" />
+      <recent name="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/media" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="openpablo.tiktokinjector" />
+      <recent name="openpablo.tiktokinjector.Reddit" />
+      <recent name="openpablo.tiktokinjector.media" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Kotlin.MainKt">
+    <configuration name="MainKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="id" value="3HN0ITuMKv6IgNaJEWk19A" />
+        <env name="secret" value="oLEtPem_FdWMD5LkegUEqbgpJqCOcg" />
+        <env name="username" value="koddit123" />
+        <env name="password" value="Abuelito19" />
+        <env name="mongoConnStr" value="mongodb+srv://pablo:LxBc7T0LaSjc6sZL@koddit.s3t3d.mongodb.net/myFirstDatabase" />
+        <env name="limitPosts" value="300" />
+        <env name="limitThread" value="10" />
+        <env name="subRedditList" value="AskReddit" />
+        <env name="tiktokusername" value="pablo.hendrickx.tiktok@gmail.com" />
+        <env name="tiktokpassword" value="rvp3urUPQaauT2f!" />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="MainKt" />
+      <module name="tiktok-injector.main" />
+      <shortenClasspath name="NONE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="tiktokusername" value="pablo.hendrickx.tiktok@gmail.com" />
+        <env name="tiktokpassword" value="rvp3urUPQaauT2f!" />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="TestKt" />
+      <module name="tiktok-injector.main" />
+      <shortenClasspath name="NONE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Kotlin.MainKt" />
+      <item itemvalue="Kotlin.TestKt" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Kotlin.MainKt" />
+        <item itemvalue="Kotlin.TestKt" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6c4606da-0744-41ce-bb77-5a9c166d0669" name="Changes" comment="" />
+      <created>1649188201148</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1649188201148</updated>
+      <workItem from="1649188202924" duration="123000" />
+      <workItem from="1649515627185" duration="1822000" />
+      <workItem from="1649618945907" duration="1747000" />
+      <workItem from="1649657409919" duration="1009000" />
+      <workItem from="1649676059928" duration="7772000" />
+      <workItem from="1649703786098" duration="1960000" />
+      <workItem from="1649744112820" duration="195000" />
+      <workItem from="1649745117409" duration="207000" />
+      <workItem from="1649789243277" duration="1686000" />
+      <workItem from="1649877536203" duration="12641000" />
+      <workItem from="1649933164457" duration="6981000" />
+      <workItem from="1650027490014" duration="6296000" />
+      <workItem from="1650191175848" duration="30502000" />
+      <workItem from="1650294428930" duration="10151000" />
+      <workItem from="1650313833255" duration="72000" />
+      <workItem from="1650313944932" duration="94000" />
+      <workItem from="1650347703501" duration="758000" />
+      <workItem from="1650368553184" duration="5812000" />
+      <workItem from="1650471303688" duration="2693000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

@@ -17,7 +17,7 @@ open class BrowseTo(val baseUrl: String, pathToDriver: String, chromeProfile: St
         options.setExperimentalOption("excludeSwitches", listOf("enable-automation"))
         options.setExperimentalOption("useAutomationExtension", false)
         options.addArguments(chromeProfile)
-        options.addArguments("--window-size=1280,1440")
+        //options.addArguments("--window-size=1280,1440")
         System.setProperty("webdriver.chrome.driver",pathToDriver);
         System.setProperty("webdriver.chrome.silentOutput", "true");
         java.util.logging.Logger.getLogger("org.openqa.selenium").setLevel(Level.SEVERE);
@@ -36,18 +36,18 @@ open class BrowseTo(val baseUrl: String, pathToDriver: String, chromeProfile: St
         WebDriverWait(driver, timout).until(ExpectedConditions.elementToBeClickable(By.xpath(xpath))).click()
     }
     fun waitUntilXpath(xpath: String){
-        sleep()
         val timout = Duration.ofSeconds(15)
-        WebDriverWait(driver, timout).until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath))).click()
+        WebDriverWait(driver, timout).until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)))
     }
     fun clickXpath(selector: String) {
+        sleep()
         if (checkifExistsXpath(selector)) {
             val element = driver.findElement(By.xpath(selector))
             driver.executeScript("arguments[0].click();", element)
         }
     }
-    private fun sleep(){
-        val rand = (500..2000).random()
+    fun sleep(lower: Int = 500, upper: Int = 2000 ){
+        val rand = (lower..upper).random()
         Thread.sleep(rand.toLong())
     }
     fun checkifExistsXpath(selector: String): Boolean {

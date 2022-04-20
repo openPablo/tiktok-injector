@@ -9,7 +9,7 @@ import java.io.File
 fun composeVideo(thread: RedditThread, snapper: PostScreenshotter, workingDir: String) {
     if (thread.text.length < 200) {
         generateVid(59.00, thread, snapper, workingDir)
-    } else if (thread.text.length < 2000) {
+    } else if (thread.text.length < 3000) {
         generateVid(179.00, thread, snapper, workingDir)
     } else {
         println("Skipped, OP was too long for ${thread._id}\"")
@@ -54,7 +54,7 @@ fun generateAttributes(
         val paragraphs = target.text.split("\n\n")
         val tts = TextToSpeech(isVoiceRandomized)
         paragraphs.forEachIndexed() { i, paragraph ->
-            if (paragraph != null) {
+            if (paragraph != "") {
                 val musicFile = "$workingDir/voice/${target.name}_$i.wav"
                 val imageFile = "$workingDir/screenshots/${target.name}_$i.png"
                 tts.textToSpeech(paragraph, musicFile)

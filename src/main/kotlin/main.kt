@@ -39,7 +39,6 @@ fun prepareWorkDir(baseDir: String) {
     makeDirIfNotExist("$baseDir/raw_videos")
     makeDirIfNotExist("$baseDir/composed_videos")
     File("$baseDir/output.txt").createNewFile()
-    File("$baseDir/done.txt").createNewFile()
 }
 
 fun makeDirIfNotExist(path: String) {
@@ -117,4 +116,5 @@ fun uploadTiktoks(baseDir: String) {
             println("Failed uploading ${video.absolutePath}")
         }
     }
+    tiktok.close()
 }

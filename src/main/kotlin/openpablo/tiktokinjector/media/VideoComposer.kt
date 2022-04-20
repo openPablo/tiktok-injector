@@ -83,12 +83,12 @@ class VideoComposer(val filename: String, val aspect_ratio: Double, var maxDurat
         var startTime = 0.00
         val length = images.size + imageNr - 1
         val widthMargin = 80
-        val bottomMargin = 300
+        val bottomMargin = 150
         images.forEach { image ->
             val imageEndTime = startTime + image.value
             cmd += " [$imageNr]scale=$width-$widthMargin:-1 [pic$imageNr]; " +  //Scales the image to the video width
                     "[vid$imageNr][pic$imageNr] overlay = " +
-                    "(W-w)/3:(H-h)-$bottomMargin:enable='between(t,$startTime,${imageEndTime})' " +  //sets image in center of vid
+                    "(W-w)/2:$bottomMargin:enable='between(t,$startTime,${imageEndTime})' " +  //sets image in center of vid
                     "[vid${imageNr + 1}] "
             if (imageNr < length) {       //check because the last item can't have a ';'
                 cmd += ";"
