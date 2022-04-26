@@ -5,22 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6c4606da-0744-41ce-bb77-5a9c166d0669" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/RedditScraper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/RedditScraper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/Reddit/DataClass.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/Reddit/DataClass.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/Reddit/PostScreenshotter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/Reddit/PostScreenshotter.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/TikTokComposer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/TikTokComposer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/TikTokUploader.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/TikTokUploader.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/media/Browser.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/media/Browser.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/media/VideoComposer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/openpablo/tiktokinjector/media/VideoComposer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/test.kt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -176,7 +166,12 @@
       <workItem from="1650313944932" duration="94000" />
       <workItem from="1650347703501" duration="758000" />
       <workItem from="1650368553184" duration="5812000" />
-      <workItem from="1650471303688" duration="2693000" />
+      <workItem from="1650471303688" duration="3590000" />
+      <workItem from="1650521462849" duration="2062000" />
+      <workItem from="1650539197796" duration="1483000" />
+      <workItem from="1650558866238" duration="2926000" />
+      <workItem from="1650917286916" duration="7000" />
+      <workItem from="1650917303064" duration="1749000" />
     </task>
     <servers />
   </component>

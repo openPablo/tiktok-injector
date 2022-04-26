@@ -17,7 +17,7 @@ suspend fun main() {
     val password = System.getenv("password")
     val mongoConnStr = System.getenv("mongoConnStr")
     val subRedditList =
-        "AskReddit relationship_advice amItheAsshole TrueOffMyChest AskRedditAfterDark".split(" ").toTypedArray()
+        "AskReddit relationship_advice amItheAsshole TrueOffMyChest AskRedditAfterDark confession".split(" ").toTypedArray()
 
 
     val baseDir = "/home/pablo/tiktok"
@@ -29,7 +29,8 @@ suspend fun main() {
 
     scrapeSubreddits(reddit, subRedditList, db, 3, 300, baseDir)
     createTiktoks(db, baseDir)
-    uploadTiktoks(baseDir)
+    execute("python /home/pablo/IdeaProjects/tiktok-injector/helperfiles/uploader.py")
+    //uploadTiktoks(baseDir)
 }
 fun prepareWorkDir(baseDir: String) {
     makeDirIfNotExist(baseDir)
@@ -117,4 +118,10 @@ fun uploadTiktoks(baseDir: String) {
         }
     }
     tiktok.close()
+}
+
+suspend fun execute(cmd: String): String {
+    val pb = ProcessBuilder("sh", "-c", cmd)
+    val process = pb.start()
+    return String(process.inputStream.readAllBytes())
 }

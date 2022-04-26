@@ -82,7 +82,7 @@ class VideoComposer(val filename: String, val aspect_ratio: Double, var maxDurat
         var imageNr = 2                                  //ImageNr starts at 2 because the base vid and audio file are 0 and 1
         var startTime = 0.00
         val length = images.size + imageNr - 1
-        val widthMargin = 80
+        val widthMargin = 40
         val bottomMargin = 150
         images.forEach { image ->
             val imageEndTime = startTime + image.value

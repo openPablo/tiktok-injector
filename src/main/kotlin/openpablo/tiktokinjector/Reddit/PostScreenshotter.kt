@@ -43,6 +43,10 @@ class PostScreenshotter(baseUrl: String, pathToDriver: String, chromeProfile: St
     }
 
     private fun screenshot(element: WebElement): File {
-        return (element as TakesScreenshot).getScreenshotAs(OutputType.FILE)
+        element.sendKeys(Keys.chord(Keys.CONTROL, Keys.ADD));
+        element.sendKeys(Keys.chord(Keys.CONTROL, Keys.ADD));
+        val screenshotFile = (element as TakesScreenshot).getScreenshotAs(OutputType.FILE)
+        element.sendKeys(Keys.chord(Keys.CONTROL, "0"));
+        return screenshotFile
     }
 }

@@ -94,7 +94,11 @@ data class RedditThread(
     var posts: List<RedditPost> = ArrayList()
 ) : RedditObject() {
     init {
-        text = title + "\n\n" +  selftext_html
+        if (selftext_html != null){
+            text = title + "\n\n" +  selftext_html
+        } else {
+            text = title
+        }
         text = sanitize(text)
     }
 }

@@ -21,7 +21,7 @@ fun generateVid(maxDuration: Double, thread: RedditThread, snapper: PostScreensh
     val backGroundVid = pickRandomVideo("$workingDir/raw_videos")
     val tiktok = VideoComposer(backGroundVid, 9.00 / 16.00, maxDuration)
     println("Generating audio and screenshots for ${thread._id}")
-    generateAttributes(thread, snapper, false, tiktok, true, workingDir)
+    generateAttributes(thread, snapper, true, tiktok, true, workingDir)
     var i = 0
     while (!tiktok.vidIsFull) {
         if (thread.posts[i].text.length < 1500) {
