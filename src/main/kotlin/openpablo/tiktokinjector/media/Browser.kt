@@ -13,15 +13,19 @@ open class BrowseTo(val baseUrl: String, pathToDriver: String, chromeProfile: St
     var options = ChromeOptions()
     init {
         options = ChromeOptions()
-        options.addArguments("start-maximized")
+        //options.addArguments("start-maximized")
         options.setExperimentalOption("excludeSwitches", listOf("enable-automation"))
         options.setExperimentalOption("useAutomationExtension", false)
         options.addArguments(chromeProfile)
-        //options.addArguments("--window-size=1280,1440")
+        options.addArguments("--disable-blink-features=AutomationControlled")
+
+        options.addArguments("user-agent=Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:98.0) Gecko/20100101 Firefox/98.0");
+        options.addArguments("--window-size=1280,1440")
         System.setProperty("webdriver.chrome.driver",pathToDriver);
         System.setProperty("webdriver.chrome.silentOutput", "true");
         java.util.logging.Logger.getLogger("org.openqa.selenium").setLevel(Level.SEVERE);
         driver = ChromeDriver(options)
+        driver.executeScript("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
         driver[baseUrl]
     }
 

@@ -29,8 +29,7 @@ suspend fun main() {
 
     scrapeSubreddits(reddit, subRedditList, db, 3, 300, baseDir)
     createTiktoks(db, baseDir)
-    execute("python /home/pablo/IdeaProjects/tiktok-injector/helperfiles/uploader.py")
-    //uploadTiktoks(baseDir)
+    uploadTiktoks(baseDir)
 }
 fun prepareWorkDir(baseDir: String) {
     makeDirIfNotExist(baseDir)
